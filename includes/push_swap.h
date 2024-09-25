@@ -52,6 +52,5 @@ void			fill_indexes(t_int_stack stack);
 void			k_sort(t_int_stack *stack_a, t_int_stack *stack_b);
 void			k_sort2(t_int_stack *stack_a, t_int_stack *stack_b);
 t_bool			is_ordered(t_int_stack stack);
-void			small_order1(t_int_stack *stack_a, t_int_stack *stack_b);
 
 #endif

@@ -40,23 +40,70 @@ void	invalid_arg_amount_error(void);
 // 	counter = 0;
 // 	while (counter++ < length)
 // 	{
+// 		ft_putchar_fd('(', 1);
+// 		ft_putnbr_fd(stacks[1]->index, 1);
+// 		ft_putstr_fd(") ", 1);
 // 		ft_putnbr_fd(stack_pop(&stacks[1]), 1);
 // 		ft_putendl_fd("", 1);
 // 	}
 // }
 
-static void	small_order2(t_int_stack *stack)
+static void	small_order3(t_int_stack *stack_a)
 {
-	if (((*stack)->index - 1 == (*stack)->next->index)
-		|| ((*stack)->index == 1 && (*stack)->next->index == 3))
+	if ((*stack_a)->index == 2)
+		move_reverse_rotate(stack_a, (void *)0);
+}
+
+static void small_order2(t_int_stack *stack_a, t_int_stack *stack_b)
+{
+	if ((*stack_a)->index == 2 || (*stack_a)->index == 4)
 	{
-		move_silent_swap(stack);
-		ft_putendl_fd("sa", 1);
+		if ((*stack_b)->index < (*stack_b)->next->index)
+			move_rotate((void *)0, stack_b);
+		move_push(stack_a, stack_b, TRUE);
+		if ((*stack_a)->index == 1 && (*stack_b)->index == 2)
+			move_rotate(stack_a, stack_b);
+		else if ((*stack_a)->index == 1)
+			move_rotate(stack_a, (void *)0);
+		else if ((*stack_b)->index == 2)
+			move_rotate((void *)0, stack_b);
 	}
-	if ((*stack)->index == 2 && (*stack)->next->index == 3)
-		move_reverse_rotate(stack, (void *)0);
-	else if ((*stack)->index == 3 && (*stack)->next->index == 1)
-		move_rotate(stack, (void *)0);
+	else
+	{
+		if ((*stack_b)->index > (*stack_b)->next->index)
+			move_rotate((void *)0, stack_b);
+		move_push(stack_a, stack_b, TRUE);
+		if ((*stack_a)->index == 1)
+			move_reverse_rotate(stack_a, stack_b);
+		else
+			move_reverse_rotate((void *)0, stack_b);
+	}
+	move_push(stack_a, stack_b, FALSE);
+	move_push(stack_a, stack_b, FALSE);
+	move_push(stack_a, stack_b, FALSE);
+}
+
+static void	small_order1(t_int_stack *stack_a, t_int_stack *stack_b)
+{
+	unsigned int	length;
+	unsigned int	counter;
+
+	length = stack_length(*stack_a);
+	if ((*stack_a)->index == 1 || (*stack_a)->index == length)
+		move_rotate(stack_a, (void *)0);
+	if ((*stack_a)->index == 1 || (*stack_a)->index == length)
+		move_rotate(stack_a, (void *)0);
+	counter = 2;
+	while (counter-- > 0)
+	{
+		move_push(stack_a, stack_b, TRUE);
+		if (((*stack_a)->index == 1 || (*stack_a)->index == length)
+			&& ((*stack_a)->next->index == 1
+			|| (*stack_a)->next->index == length))
+			move_reverse_rotate(stack_a, (void *)0);
+		else if ((*stack_a)->index == 1 || (*stack_a)->index == length)
+			move_rotate(stack_a, (void *)0);
+	}
 }
 
 int	main(int argc, const char **argv)
@@ -73,16 +120,17 @@ int	main(int argc, const char **argv)
 	if (is_ordered(stacks[0]))
 		while (stacks[0]->index != 1)
 			move_rotate(&stacks[0], (void *)0);
-	else if (stack_length(stacks[0]) > 5)
+	else if (stack_length(stacks[0]) != 5)
 	{
 		k_sort(&stacks[0], &stacks[1]);
 		k_sort2(&stacks[0], &stacks[1]);
 	}
-	else if (stack_length(stacks[0]) == 3)
-		small_order2(&stacks[0]);
 	else
+	{
 		small_order1(&stacks[0], &stacks[1]);
+		small_order2(&stacks[0], &stacks[1]);
+		small_order3(&stacks[0]);
+	}
 	// print_stacks(stacks);
-	stack_clear(&stacks[0]);
 	return (0);
 }
