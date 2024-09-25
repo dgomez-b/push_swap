@@ -54,7 +54,7 @@ void	fill_indexes(t_int_stack stack)
 		}
 		if ((cur_value->value < min_value->value && cur_value->index == 0)
 			|| min_value->index != 0)
-				min_value = cur_value;
+			min_value = cur_value;
 		min_value->index = index;
 	}
 }

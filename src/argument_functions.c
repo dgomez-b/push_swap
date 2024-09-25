@@ -13,8 +13,10 @@
 #include "push_swap.h"
 #include "libft/libft.h"
 #include <stdlib.h>
+#include <sys/resource.h>
 
 void	invalid_arg_error(t_int_stack *stacks);
+void	duplicated_value_error(t_int_stack *stack_a, t_int_stack *stack_b);
 
 static t_bool	arg_is_valid(const char *arg)
 {
@@ -27,7 +29,7 @@ static t_bool	arg_is_valid(const char *arg)
 	{
 		if (!ft_isdigit(arg[counter]) && arg[counter] != '-'
 			&& arg[counter] != '+')
-				return (FALSE);
+			return (FALSE);
 		counter++;
 	}
 	return (TRUE);
@@ -60,4 +62,27 @@ void	push_arg_to_stack(t_int_stack *stacks, const char *arg)
 	while (string_values[counter2])
 		free(string_values[counter2++]);
 	free(string_values);
+}
+
+void	check_duplicated_arguments(t_int_stack *stack_a, t_int_stack *stack_b)
+{
+	t_int_stack		current;
+	int				value;
+	unsigned int	length;
+	unsigned int	length2;
+
+	length = stack_length(*stack_a);
+	while (length-- > 0)
+	{
+		current = *stack_a;
+		value = current->value;
+		length2 = length;
+		while (length2-- > 0)
+		{
+			current = current->next;
+			if (current->value == value)
+				duplicated_value_error(stack_a, stack_b);
+		}
+		*stack_a = (*stack_a)->next;
+	}
 }

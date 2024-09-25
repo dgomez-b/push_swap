@@ -29,3 +29,13 @@ void	invalid_arg_error(t_int_stack *stacks)
 	ft_putendl_fd("Error -> Values should be integer", 1);
 	exit (0);
 }
+
+void	duplicated_value_error(t_int_stack *stack_a, t_int_stack *stack_b)
+{
+	if (stack_a && *stack_a)
+		stack_clear(stack_a);
+	if (stack_b && *stack_b)
+		stack_clear(stack_b);
+	ft_putendl_fd("Error -> Duplicate values are forbidden", 1);
+	exit (0);
+}

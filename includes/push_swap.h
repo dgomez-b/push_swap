@@ -39,10 +39,12 @@ unsigned int	stack_length(t_int_stack stack);
 
 // Argument functions
 void			push_arg_to_stack(t_int_stack *stack, const char *arg);
+void			check_duplicated_arguments(t_int_stack *stack_a,
+					t_int_stack *stack_b);
 
 //Move functions
 void			move_push(t_int_stack *stack_a, t_int_stack *stack_b,
-				t_bool to_stack_b);
+					t_bool to_stack_b);
 void			move_rotate(t_int_stack *stack_a, t_int_stack *stack_b);
 void			move_reverse_rotate(t_int_stack *stack_a, t_int_stack *stack_b);
 void			move_silent_swap(t_int_stack *stack);
@@ -52,5 +54,7 @@ void			fill_indexes(t_int_stack stack);
 void			k_sort(t_int_stack *stack_a, t_int_stack *stack_b);
 void			k_sort2(t_int_stack *stack_a, t_int_stack *stack_b);
 t_bool			is_ordered(t_int_stack stack);
+void			small_order1(t_int_stack *stack_a, t_int_stack *stack_b);
+void			small_order2(t_int_stack *stack_a, t_int_stack *stack_b);
 
 #endif

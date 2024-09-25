@@ -99,8 +99,8 @@ int	stack_pop(t_int_stack *stack)
 /// @return The stack length
 unsigned int	stack_length(t_int_stack stack_element)
 {
-	t_int_stack		first_element;
-	int	counter;
+	t_int_stack	first_element;
+	int			counter;
 
 	if (!stack_element)
 		return (0);
